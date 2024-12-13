@@ -10,7 +10,7 @@ export class UserController {
     return this.userService.login(user_id, user_pw);
   }
 
-  @Post('user')
+  @Post('user/create')
   create(@Body('user_name') user_name: string, @Body('user_id') user_id: string, @Body('user_pw') user_pw: string) {
     return this.userService.create(user_name, user_id, user_pw);
   }

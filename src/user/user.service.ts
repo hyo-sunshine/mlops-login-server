@@ -7,8 +7,7 @@ import axios from 'axios';
 export class UserService {
     KONG_ADMIN_API: string;
     constructor(
-        @InjectRepository(UserEntityRepository) // 사용하지 않아도 정상적으로 동작하는가? 
-        private userRepository: UserEntityRepository
+        @InjectRepository(UserEntityRepository) private userRepository: UserEntityRepository
     ) {
         this.KONG_ADMIN_API = process.env.KONG_ADMIN_API; 
     }
@@ -42,5 +41,4 @@ export class UserService {
     
         return { token: tokenResponse.data }; // Return JWT token
       }
-
 }

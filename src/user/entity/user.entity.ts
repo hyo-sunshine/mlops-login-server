@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -10,7 +10,4 @@ export class UserEntity {
 
   @Column()
   user_pw: string;
-
-  @Column()
-  jwt: string;
 }

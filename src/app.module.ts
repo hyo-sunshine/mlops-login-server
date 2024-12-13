@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
       envFilePath: '.env', // .env 파일 경로 설정
       isGlobal: true,      // 전역으로 사용 설정
     }),
+    // postgresql db 연동
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -24,6 +26,9 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true,
     }),
+
+    // 사용자 정의 모듈 추가
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
