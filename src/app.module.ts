@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { ProxyMiddleware } from './gateway/proxy.middleware';
+import { RoutingService } from './gateway/routing.service';
 
 @Module({
   imports: [
@@ -25,12 +27,17 @@ import { UserModule } from './user/user.module';
       // entity load 부분
       autoLoadEntities: true,
       synchronize: true,
+      logging: true,
     }),
 
     // 사용자 정의 모듈 추가
     UserModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, RoutingService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ProxyMiddleware).forRoutes('*');
+  }
+}
